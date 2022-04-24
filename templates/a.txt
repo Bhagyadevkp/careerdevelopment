@@ -1,0 +1,24 @@
+def Editbook(request,id):
+        if request.method == 'POST':
+            name = request.POST.get('name')
+            author = request.POST.get('author')
+            pub_date = request.POST.get('pub_date')
+            category = request.POST.get('category')
+            description = request.POST.get('description')
+            booknumber = request.POST.get('booknumber')
+            image = request.FILES.get('image')
+            book=books.objects.get(id=id)
+            book.name=name
+            book.author=author
+            book.pub_date=pub_date
+            book.category=category
+            book.description=description
+            book.booknumber=booknumber
+            book.image=image
+            book.save()
+            return redirect('Adminbook')
+        else:
+            book=books.objects.get(id=id)
+            return render(request,'editbook.html',{
+                'book':book
+                })
