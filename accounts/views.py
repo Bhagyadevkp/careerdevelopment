@@ -39,21 +39,22 @@ def register_company(request):
         company_name = request.POST['company_name']
         company_email = request.POST['company_email']
         company_password1 = request.POST['company_password1'] 
-        company_password2 = request.POST['company_password2']
-        if company_password1 == company_password2:
-            if User.objects.filter(username=company_name).exists():
-                messages.info(request, "Username Taken")
-                return redirect('register_company')
-            elif User.objects.filter(email=company_email).exists():
-                messages.info(request, "Email Taken")
-                return redirect ('register_company')
-            else:
-                user = User.objects.create_user(username=company_name, email=company_email, password=company_password1,is_staff=True)
-                user.save()
+        # company_password2 = request.POST['company_password2']
+        # if company_password1 == company_password2:
+        #     if User.objects.filter(username=company_name).exists():
+        #         messages.info(request, "Username Taken")
+        #         return redirect('register_company')
+        #     elif User.objects.filter(email=company_email).exists():
+        #         messages.info(request, "Email Taken")
+        #         return redirect ('register_company')
+        #     else:
+        user = User.objects.create_user(username=company_name, email=company_email, password=company_password1,is_staff=True)
+        user.save()
+        return redirect('login')
                 # print("User Created")
-        else:
-            messages.info(request, "Password not matching")
-            return redirect('register_company')
+        # else:
+        #     messages.info(request, "Password not matching")
+        #     return redirect('register_company')
     else:
         return render(request, 'company-signup.html')
 
